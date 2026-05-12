@@ -91,7 +91,7 @@ const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: (i = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }
+    transition: { duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
   })
 };
 const fadeIn = {
@@ -197,56 +197,15 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(249,115,22,0.12),transparent_34%),linear-gradient(180deg,rgba(255,247,240,0.95),rgba(255,255,255,0.92)_42%,rgba(255,248,244,0.9))]" />
         <div className="absolute inset-0 webora-grid opacity-40" />
-        <motion.div
-          className="absolute top-[-8%] left-[8%] h-[34rem] w-[34rem] rounded-full opacity-[0.16] blur-3xl"
-          style={{ background: 'conic-gradient(from 90deg,#F97316,#FDBA74,#FB923C,#F97316)' }}
-          animate={{ rotate: [0, 180, 360], scale: [1, 1.08, 0.94, 1] }}
-          transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
-        />
-        <motion.div
-          className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-[0.18] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }}
-          animate={{ x: [0, 60, -40, 0], y: [0, 40, -30, 0], scale: [1, 1.15, 0.95, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute top-1/3 -left-48 w-[500px] h-[500px] rounded-full opacity-[0.14] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#FB923C,transparent 70%)' }}
-          animate={{ x: [0, 80, 40, 0], y: [0, -50, 30, 0], scale: [1, 0.9, 1.1, 1] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-0 right-1/3 w-[450px] h-[450px] rounded-full opacity-[0.16] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }}
-          animate={{ x: [0, -70, 50, 0], y: [0, -40, 60, 0], scale: [1, 1.2, 0.95, 1] }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute top-2/3 left-1/2 w-[300px] h-[300px] rounded-full opacity-[0.10] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#FFB37A,transparent 70%)' }}
-          animate={{ x: [0, 100, -60, 0], y: [0, 60, -40, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute inset-x-[12%] top-[18%] h-px bg-gradient-to-r from-transparent via-[#F97316]/50 to-transparent"
-          animate={{ opacity: [0.25, 0.8, 0.25], scaleX: [0.9, 1, 0.92] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-[18%] right-[10%] h-56 w-56 rounded-full border border-[#F97316]/15"
-          animate={{ y: [0, -16, 0], rotate: [0, 20, 0], scale: [1, 1.06, 1] }}
-          transition={{ duration: 16, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute left-[6%] top-[24%] h-3 w-3 rounded-full bg-[#F97316]/60 shadow-[0_0_24px_rgba(249,115,22,0.7)]"
-          animate={{ y: [0, 26, -8, 0], x: [0, 12, 0], opacity: [0.35, 1, 0.45] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute right-[12%] top-[38%] h-2.5 w-2.5 rounded-full bg-[#111]/20 shadow-[0_0_24px_rgba(17,17,17,0.15)]"
-          animate={{ y: [0, -18, 0], x: [0, -10, 0], opacity: [0.2, 0.7, 0.2] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-        />
+        <div className="blob-spin absolute top-[-8%] left-[8%] h-[34rem] w-[34rem] rounded-full opacity-[0.16] blur-3xl" style={{ background: 'conic-gradient(from 90deg,#F97316,#FDBA74,#FB923C,#F97316)' }} />
+        <div className="blob-float-1 absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full opacity-[0.18] blur-3xl" style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }} />
+        <div className="blob-float-2 absolute top-1/3 -left-48 w-[500px] h-[500px] rounded-full opacity-[0.14] blur-3xl" style={{ background: 'radial-gradient(circle,#FB923C,transparent 70%)' }} />
+        <div className="blob-float-3 absolute bottom-0 right-1/3 w-[450px] h-[450px] rounded-full opacity-[0.16] blur-3xl" style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }} />
+        <div className="blob-float-4 absolute top-2/3 left-1/2 w-[300px] h-[300px] rounded-full opacity-[0.10] blur-3xl" style={{ background: 'radial-gradient(circle,#FFB37A,transparent 70%)' }} />
+        <div className="blob-line absolute inset-x-[12%] top-[18%] h-px bg-gradient-to-r from-transparent via-[#F97316]/50 to-transparent" />
+        <div className="blob-ring absolute bottom-[18%] right-[10%] h-56 w-56 rounded-full border border-[#F97316]/15" />
+        <div className="blob-dot-1 absolute left-[6%] top-[24%] h-3 w-3 rounded-full bg-[#F97316]/60 shadow-[0_0_24px_rgba(249,115,22,0.7)]" />
+        <div className="blob-dot-2 absolute right-[12%] top-[38%] h-2.5 w-2.5 rounded-full bg-[#111]/20 shadow-[0_0_24px_rgba(17,17,17,0.15)]" />
       </div>
 
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â• NAVBAR â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
@@ -324,11 +283,9 @@ export default function Home() {
           {/* grid texture */}
           <div className="absolute inset-0 opacity-[0.025]"
             style={{ backgroundImage: 'linear-gradient(#111 1px,transparent 1px),linear-gradient(90deg,#111 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
-          <motion.div
-            className="absolute inset-x-[10%] top-24 h-24 rounded-full blur-3xl opacity-30"
+          <div
+            className="blob-line absolute inset-x-[10%] top-24 h-24 rounded-full blur-3xl opacity-30"
             style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }}
-            animate={{ opacity: [0.2, 0.35, 0.2], scaleX: [0.9, 1.05, 0.92] }}
-            transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }}
           />
 
           <div className="max-w-7xl mx-auto w-full">
@@ -354,7 +311,7 @@ export default function Home() {
                         initial={{ opacity: 0, y: 22, rotateX: -70, filter: 'blur(10px)' }}
                         animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
                         exit={{ opacity: 0, y: -18, rotateX: 60, filter: 'blur(8px)' }}
-                        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                         className="relative z-10 inline-block will-change-transform"
                         style={{ WebkitTextFillColor: 'transparent', WebkitBackgroundClip: 'text', backgroundImage: ORG, backgroundClip: 'text' }}
                       >
@@ -367,7 +324,7 @@ export default function Home() {
                       style={{ background: ORG }}
                       initial={{ scaleX: 0.8, opacity: 0 }}
                       animate={{ scaleX: [0.88, 1.06, 1], opacity: [0, 0.3, 0.18] }}
-                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                     />
                   </span>
                   {' '}chaque jour.
@@ -417,17 +374,13 @@ export default function Home() {
 
               {/* RIGHT - browser mockup */}
               <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as [number, number, number, number], delay: 0.3 }}
                 className="relative w-full max-w-[680px] mx-auto lg:max-w-none">
 
                 {/* glow */}
                 <div className="absolute inset-0 blur-3xl opacity-25 scale-90"
                   style={{ background: 'radial-gradient(ellipse,#F97316,transparent 65%)' }} />
-                <motion.div
-                  className="absolute inset-[7%] rounded-[2rem] border border-white/35"
-                  animate={{ opacity: [0.24, 0.5, 0.24], scale: [0.98, 1.01, 0.98] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                />
+                <div className="absolute inset-[7%] rounded-[2rem] border border-white/35 opacity-35" />
 
                 {/* floating badge 1 */}
                 <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
@@ -465,7 +418,7 @@ export default function Home() {
                 {/* browser frame */}
                 <motion.div
                   whileHover={{ y: -6, rotateX: 4, rotateY: -4 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
                   style={{ transformStyle: 'preserve-3d' }}
                   className="relative rounded-[1.75rem] overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.18)] border border-[#F1F1F1] bg-white"
                 >
