@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
+import { useSubmitRendezVous } from "@workspace/api-client-react";
 import { ArrowLeft, CalendarDays, CheckCircle2, Clock3, Phone, Video } from "lucide-react";
 
 const ORG = "linear-gradient(135deg,#F97316,#FB923C)";
@@ -39,6 +40,10 @@ export default function RendezVous() {
 
   const update = (key: keyof typeof form, value: string) =>
     setForm((current) => ({ ...current, [key]: value }));
+
+  const submitRendezVous = useSubmitRendezVous({
+    mutation: { onSuccess: () => setSubmitted(true) },
+  });
 
   const canSubmit = form.name && form.email && form.business && selectedSlot;
 
@@ -209,12 +214,25 @@ export default function RendezVous() {
                     </div>
                     <button
                       type="button"
-                      disabled={!canSubmit}
-                      onClick={() => setSubmitted(true)}
+                      disabled={!canSubmit || submitRendezVous.isPending}
+                      onClick={() => {
+                        submitRendezVous.mutate({
+                          data: {
+                            name: form.name,
+                            email: form.email,
+                            business: form.business,
+                            website: form.website || null,
+                            notes: form.notes || null,
+                            day: selectedDay,
+                            slot: selectedSlot,
+                            meetingType,
+                          },
+                        });
+                      }}
                       className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-bold text-white disabled:opacity-40 disabled:cursor-not-allowed shadow-[0_16px_34px_rgba(249,115,22,0.28)] hover:-translate-y-0.5 transition-all"
                       style={{ background: ORG }}
                     >
-                      Confirmer le rendez-vous
+                      {submitRendezVous.isPending ? "Confirmation..." : "Confirmer le rendez-vous"}
                     </button>
                   </div>
                 </>
