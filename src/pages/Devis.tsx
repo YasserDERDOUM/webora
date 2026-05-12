@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
+import { useSubmitDevis } from '@workspace/api-client-react';
 import {
   ArrowLeft, CheckCircle2, Sparkles, Clock, Shield, Send,
   Utensils, Coffee, ShoppingBag, Briefcase, Star
@@ -51,11 +52,27 @@ export default function Devis() {
 
   const update = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submitDevis = useSubmitDevis({
+    mutation: { onSuccess: () => setSubmitted(true) },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: hook to backend / email service
-    await new Promise(r => setTimeout(r, 700));
-    setSubmitted(true);
+    submitDevis.mutate({
+      data: {
+        plan: form.plan,
+        type: form.type,
+        name: form.name,
+        business: form.business,
+        email: form.email,
+        phone: form.phone || null,
+        city: form.city || null,
+        website: form.website || null,
+        budget: form.budget || null,
+        deadline: form.deadline || null,
+        message: form.message || null,
+      },
+    });
   };
 
   const canNext1 = form.plan && form.type;
@@ -66,18 +83,8 @@ export default function Devis() {
 
       {/* ── DYNAMIC BG ── */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <motion.div
-          className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.18] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }}
-          animate={{ x: [0, 60, -40, 0], y: [0, 40, -30, 0], scale: [1, 1.15, 0.95, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.14] blur-3xl"
-          style={{ background: 'radial-gradient(circle,#FB923C,transparent 70%)' }}
-          animate={{ x: [0, 80, 40, 0], y: [0, -50, 30, 0], scale: [1, 0.9, 1.1, 1] }}
-          transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <div className="blob-devis-1 absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full opacity-[0.18] blur-3xl" style={{ background: 'radial-gradient(circle,#F97316,transparent 70%)' }} />
+        <div className="blob-devis-2 absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full opacity-[0.14] blur-3xl" style={{ background: 'radial-gradient(circle,#FB923C,transparent 70%)' }} />
       </div>
 
       {/* ── HEADER ── */}
@@ -264,9 +271,11 @@ export default function Devis() {
                         ← Retour
                       </button>
                       <button type="submit"
-                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-bold shadow-lg hover:scale-[1.02] transition"
+                        disabled={submitDevis.isPending}
+                        className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-white font-bold shadow-lg hover:scale-[1.02] transition disabled:opacity-60 disabled:cursor-not-allowed"
                         style={{ background: ORG }}>
-                        <Send className="w-4 h-4" /> Envoyer ma demande
+                        <Send className="w-4 h-4" />
+                        {submitDevis.isPending ? 'Envoi...' : 'Envoyer ma demande'}
                       </button>
                     </div>
                   </motion.div>
